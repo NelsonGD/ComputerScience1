@@ -34,6 +34,8 @@ node* reverse(node* head)
     node* reverse_list = malloc(sizeof(node));
     reverse_list -> data = head;
     reverse_list -> next = NULL;
+
+	node* temp;
     
 
 }
