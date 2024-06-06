@@ -4,12 +4,9 @@ Nelson Diaz
 Program implements a reverse function and insertToPlace function for linked list.
 */
 
-#include<stdio.h>
-#include<stdlib.h>
- typedef struct node{
-	struct node *next;
-	int data;
-}node;
+#include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 //this function takes an item and insert it in the linked list pointed by root.
 node*  insert_front(node *root, int item)
@@ -31,13 +28,18 @@ node*  insert_front(node *root, int item)
 
 node* reverse(node* head)
 {
-    node* reverse_list = malloc(sizeof(node));
-    reverse_list -> data = head;
-    reverse_list -> next = NULL;
+	node* reversed_list = NULL; // Will be new head
+	node* current = head; // Beginnning of current list
+	node* next = NULL; // Will store the node next to 'current'
 
-	node* temp;
-    
-
+	while(current != NULL)
+	{
+		next = current -> next;
+		current -> next = reversed_list;
+		reversed_list = current;
+		current = next;
+	}
+	return reversed_list; // returning the new head of the list
 }
 
 void display(node* t)
@@ -52,16 +54,56 @@ void display(node* t)
 
 }
 
+void insertToPlace(node* head, int val, int place)
+{
+	if(place <= 1 || head == NULL){
+		printf("List is empty or place is not valid");
+	}else{
+		node* newValue = malloc(sizeof(node));
+		if(newValue == NULL)
+		{
+			printf("Malloc failed for newValue");
+			exit(1);
+		}
+		newValue -> data = val;
+		newValue -> next = NULL;
+
+		// getting list pointer and variable declaration
+		node* current = head;
+		node* prev = NULL;
+		int counter = 1; // place is always bigger than 1
+
+		// iterating until prev of insertion point
+		while(current != NULL && counter < place)
+		{
+			prev = current;
+			current = current -> next;
+			counter++;
+		}
+
+		// if position bigger than list size place newValue at the end
+		if(current == NULL && prev != NULL)
+		{
+			prev -> next = newValue;
+		}
+		else if(prev != NULL)
+		{
+			prev -> next = newValue;
+			newValue -> next = current;
+		}
+	}
+}
+
 int main()
 {
 	node *root=NULL; //very important line. Otherwise all function will fail
 	node *t;
-	int ch,ele,v, del;
+	int ch, ele, v, val, place;
 	while(1)
 	{
-		printf("\nMenu: 1. insert at front, 2. reverse list, 3. Insert to place 4. exit: ");
-	    scanf("%d",&ch);
-		if(ch==4)
+		printf("\nMenu: 1. insert at front, 2. reverse list 3. Insert to place 0. exit: ");
+	    scanf("%d", &ch);
+		if(ch==0)
 		{
 			printf("\nGOOD BYE>>>>\n");
 			break;
@@ -69,27 +111,23 @@ int main()
 		if(ch==1)
 		{
 			printf("\nEnter data(an integer): ");
-			scanf("%d",&ele);
+			scanf("%d", &ele);
 			root = insert_front(root, ele);
-
-      display(root);
+      		display(root);
 
 		}
 		if(ch==2)
 		{
-			printf("\nEnter information(an integer): ");
-			scanf("%d",&ele);
-			root = insert_end(root, ele);
-      display(root);
-
+			printf("\nList reversed.");
+			root = reverse(root);
+			display(root);
 		}
-	  if(ch==3)
-	  {
-		  printf("\nEnter info which u want to DELETE: ");
-		  scanf("%d",&del);
-		  root=DelList(root, del);
-      display(root);
-
+	    if(ch==3)
+	  	{
+		  printf("\nEnter data (an integer) and place (>1) separated by space: ");
+		  scanf("%d %d", &val, &place);
+		  insertToPlace(root, val, place);
+		  display(root);
 		}
 	}
   return 0;

@@ -4,7 +4,7 @@ typedef struct node {
 }node;
 
 
-node*  insert_front(node *root, int item);
+node* insert_front(node *root, int item);
 
 node* reverse(node* head);
 
