@@ -4,7 +4,7 @@ Nelson Diaz
 Program implements a reverse function and insertToPlace function for linked list.
 */
 
-#include "main.h",
+#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,8 +16,9 @@ node*  insert_front(node *root, int item)
 	temp= (node *) malloc(sizeof(node));
 	temp->data=item;
 	temp->next=NULL;
-	if(root==NULL) //if there is no node in the linked list
+	if(root==NULL){ //if there is no node in the linked list
         root=temp;
+	}
     else //there is an existing linked list, so put existing root after temp
     {
         temp->next = root; //put the existing root after temp
