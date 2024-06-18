@@ -58,10 +58,43 @@ typedef struct node {
     struct node* next;
 }node;
 
-void markEven(node *head)
-{
-    if(head != NULL)
+
+// PROBLEM 1 QUIZ 1
+
+typedef struct Ingredient{
+    char ingName[50]; // name of ingredient
+    float amount; // amount of this ingredient
+}Ingredient;
+
+typedef struct Recipe{
+    char *rname; // recipe's name
+    Ingredient *ings; // list of this recipe
+    int nIngs; // number of ingredients for this recipe
+}Recipe;
+
+Recipe* makeRecipe(){ // write this function
+
+    Recipe *r = malloc(sizeof(Recipe));
+    char temp[50];
+    r -> rname = malloc((strlen(temp)+1)*sizeof(char));
+    strcpy(r->rname, temp);
+    scanf("%d", &r->nIngs);
+
+    r->ings = malloc(r->nIngs * sizeof(Ingredient));
+    for(int i = 0; i < r->nIngs; i++)
     {
-        
+        scanf("%s", r-> ings[i].ingName);
+        scanf("%f", r-> ings[i].amount);
     }
+    return r;
+}
+    // to free everything
+    /*
+    free(r-> ings);
+    free(r-> name);
+    free(r)
+    */
+
+int main(void){
+    return 0;
 }
